@@ -31,39 +31,39 @@ public class Menu
             {
                 case "1":
                     //prints all entries
-                    quit = true;
+                    //quit = true;
                     break;
                 case "2":
                     //prints out music tracks
-                    quit = true;
+                    //quit = true;
                     break;
                 case "3":
                     //prints out all audiobooks
-                    quit = true;
+                    //quit = true;
                     break;
                 case "4":
                     //prints out all TV episodes
-                    quit = true;
+                    //quit = true;
                     break;
                 case "5":
                     //prints out entries of given creator
-                    quit = true;
+                    //quit = true;
                     break;
                 case "6":
                     //sorts by rating in descending order
-                    quit = true;
+                    //quit = true;
                     break;
                 case "7":
                     //sorts in ascending order by year
-                    quit = true;
+                    //quit = true;
                     break;
                 case "8":
                     //Sorts entries lexicographically 
-                    quit = true;
+                    //quit = true;
                     break;
                 case "9":
                     //prints out all entries released on or after a given year
-                    quit = true;
+                    //quit = true;
                     break;
                 case "0":
                     Console.WriteLine("Thank you for tuning into CNoteSharp. Have a nice day!");
