@@ -24,7 +24,7 @@ public class Menu
 
         while (quit == false)
         {
-            Console.Write("\nEnter your number here: ");
+            Console.Write("\nEnter your number here (0-9): ");
             command = Console.ReadLine();
 
             switch (command)
