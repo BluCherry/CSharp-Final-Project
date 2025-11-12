@@ -1,4 +1,7 @@
-﻿public class Menu
+//This is a basic menu that uses a user input, and a switch to handle exceptions. 
+//When more of the project is complete, we can update this code to work as intended. :D
+
+public class Menu
 {
     public static void Main()
     {
