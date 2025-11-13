@@ -1,6 +1,6 @@
 //Basic FileReader, outputs something close to the correct format but could obviously look better.
 //The parts are not parsed into the correct type, whoevers making the classes will decide which type each variable is, and we'll add it 
-//when that has been finalized.
+//when that has been finalized. The filewriter has nothing in it yet, we can worry about that later too.
 
 public class FileReader
 {
