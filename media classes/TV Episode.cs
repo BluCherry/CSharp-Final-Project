@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,19 +27,33 @@ namespace Intermediate_CSharp_Final
         public string ShowTitle
         {
             get => showTitle;
-            set { showTitle = value; }
+            set { showTitle = value; } //Can be null or not
         }
 
         public int SeasonNumber
         {
             get => seasonNumber;
-            set { seasonNumber = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new Exception("Season number cannot be negative");
+                }
+                seasonNumber = value;
+            }
         }
 
         public int EpisodeNumber
         {
             get => episodeNumber;
-            set { episodeNumber = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new Exception("Episode number cannot be negative");
+                }
+                episodeNumber = value;
+            }
         }
     }
 }
