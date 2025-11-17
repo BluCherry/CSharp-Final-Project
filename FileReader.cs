@@ -2,6 +2,8 @@
 //The parts are not parsed into the correct type, whoevers making the classes will decide which type each variable is, and we'll add it 
 //when that has been finalized. The filewriter has nothing in it yet, we can worry about that later too.
 
+namespace Intermediate_CSharp_Final;
+
 public class FileReader
 {
 
@@ -23,7 +25,7 @@ public class FileReader
         return lineCount;
     }
 
-    private static List<string> ReadCNoteSharpDataBase(string path)
+    public static List<object> ReadCNoteSharpDataBase(string path)
     {
         if (!File.Exists(path))
         {
@@ -31,27 +33,22 @@ public class FileReader
         }
         
         int lineCount = GetLineCount(path);
-        List<string> lines = new List<string>(lineCount - 1);
+        List<object> database = new List<object>(lineCount - 1);
         
-        using StreamReader reader = new StreamReader("CNoteSharpDatabase.csv");
+        using StreamReader reader = new StreamReader(path); 
         reader.ReadLine();
 
-        for (int i = 0; i < lineCount - 1; i++)
+        for (int i = 0; i < lineCount; i++)
         {
-            string line = reader.ReadLine();
-            lines.Add(line);
+            string data =  reader.ReadLine();
+            database.Add(data);
         }
-        return lines;
+        
+        return database;
     }
 
     private static void WriteCNoteSharpDataBase()
     {
         using StreamWriter streamWriter = new StreamWriter("CNoteSharpDatabase.csv");
-    }
-    
-    public static void Main()
-    {
-        string path = "CNoteSharpDatabase.csv";
-        Console.WriteLine(string.Join(" , \n",  ReadCNoteSharpDataBase(path)));
     }
 }
