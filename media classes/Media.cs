@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,31 +26,59 @@ namespace Intermediate_CSharp_Final
         public string Title
         {
             get => title;
-            set { title = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Title cannot be null or empty");
+                }
+                title = value;
+            }
         }
 
         public string Creator
         {
             get => creator;
-            set { creator = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Creator cannot be null or empty");
+                }
+                creator = value;
+            }
         }
 
         public int Year
         {
             get => year;
-            set { year = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Year cannot be negative");
+                }
+                year = value;
+            }
         }
 
         public double Duration
         {
             get => duration;
-            set { duration = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Duration cannot be negative");
+                }
+                duration = value;
+            }
         }
 
         public T Rating
         {
             get => rating;
-            set { rating = value; }
+            set { rating = value; } //Not sure what to do w/ this one in regards too exception handling tbh
         }
     }
 }
