@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +10,9 @@ namespace Intermediate_CSharp_Final
     {
         public Audio_Book(string title, string creator, int year, double duration, string rating) : base(title, creator, year, duration, rating)
         {
-            if (rating != "thumb up" || rating != "thumb down")
+            if (!rating.Equals("Thumbs Up") || !rating.Equals("Thumbs Down"))
             {
-                throw new ArgumentOutOfRangeException("rating for Track must be thumb up or thumb down");
+                throw new ArgumentOutOfRangeException("rating for Audiobook must be Thumbs up or Thumbs down");
             }
         }
     }
