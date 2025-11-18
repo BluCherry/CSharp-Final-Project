@@ -23,7 +23,15 @@ namespace Intermediate_CSharp_Final
         public string Album
         {
             get => album;
-            set { album = value; }
+            set 
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Album cannot be null or empty");
+                }
+                album = value; 
+            }
         }
     }
 }
+
