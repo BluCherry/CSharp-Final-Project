@@ -20,14 +20,21 @@ namespace Intermediate_CSharp_Final
             
             if (rating < 1 || rating > 10)
             {
-                throw new ArgumentOutOfRangeException("rating for Track must be thumb up or thumb down");
+                throw new ArgumentOutOfRangeException("rating for Track must be between 1 and 10");
             }
         }
 
         public string ShowTitle
         {
             get => showTitle;
-            set { showTitle = value; } //Can be null or not
+            set 
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Show Title cannot be null or empty");
+                }
+                showTitle = value; 
+            }
         }
 
         public int SeasonNumber
@@ -57,3 +64,4 @@ namespace Intermediate_CSharp_Final
         }
     }
 }
+
