@@ -17,11 +17,6 @@ namespace Intermediate_CSharp_Final
             ShowTitle = showTitle;
             SeasonNumber = seasonNumber;
             EpisodeNumber = episodeNumber;
-            
-            if (rating < 1 || rating > 10)
-            {
-                throw new ArgumentOutOfRangeException("rating for Track must be between 1 and 10");
-            }
         }
 
         public string ShowTitle
@@ -64,4 +59,5 @@ namespace Intermediate_CSharp_Final
         }
     }
 }
+
 
