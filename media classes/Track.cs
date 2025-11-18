@@ -13,11 +13,6 @@ namespace Intermediate_CSharp_Final
         public Track(string title, string creator, string album, int year, double duration, double rating) : base(title, creator, year, duration, rating)
         {
             Album = album;
-            
-            if (rating < 0 || rating > 5)
-            {
-                throw new ArgumentOutOfRangeException("rating for Track must be between 0 and 5");
-            }
         }
 
         public string Album
@@ -34,4 +29,5 @@ namespace Intermediate_CSharp_Final
         }
     }
 }
+
 
