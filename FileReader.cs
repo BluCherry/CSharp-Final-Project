@@ -63,7 +63,15 @@ public class FileReader
                 string creator = cols[3];
                 int year = int.Parse(cols[5]);
                 double duration = double.Parse(cols[8]);
-                string rating = cols[9];
+                if (cols[9] == "Thumbs Up")                 
+                {
+                    cols[9] = "True";
+                }
+                else
+                {
+                    cols[9] = "False";
+                }
+                bool rating = bool.Parse(cols[9]);
         
                 database.Add(new Audio_Book(title, creator, year, duration, rating));
             }
