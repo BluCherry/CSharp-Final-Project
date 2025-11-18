@@ -78,7 +78,31 @@ namespace Intermediate_CSharp_Final
         public T Rating
         {
             get => rating;
-            set { rating = value; } //Not sure what to do w/ this one in regards too exception handling tbh
-        }
+            set 
+            { 
+                if (typeof(T) == typeof(double))
+                {
+                    double doubleValue = Convert.ToDouble(value);
+                    if (doubleValue < 0 || doubleValue > 5)
+                    {
+                        throw new ArgumentOutOfRangeException("Rating for Track must be between 0 and 5");
+                    }
+                }
+                else if (typeof(T) == typeof(int))
+                {
+                    int intValue = Convert.ToInt32(value);
+                    if (intValue < 0 || intValue > 10)
+                    {
+                        throw new ArgumentOutOfRangeException("Rating for TV Episode must be between 0 and 10");
+                    }
+                }
+                else if (typeof(T) == typeof(bool))
+                {
+                    //I don't know what validation to do here
+                }
+    
+                rating = value; 
+}
     }
 }
+
