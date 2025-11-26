@@ -30,38 +30,56 @@ public class Menu
             switch (command)
             {
                 case "1":
+                    Console.WriteLine("Printing out all entries")
+                    
                     //prints all entries
                     //quit = true;
                     break;
                 case "2":
+                    Console.WriteLine("Printing out all music tracks")
+                    
                     //prints out music tracks
                     //quit = true;
                     break;
                 case "3":
+                    Console.WriteLine("Printing out all audiobooks")
+                    
                     //prints out all audiobooks
                     //quit = true;
                     break;
                 case "4":
+                    Console.WriteLine("Printing out all TV episodes")
+                    
                     //prints out all TV episodes
                     //quit = true;
                     break;
                 case "5":
+                    Console.WriteLine("Printing out all entries with a given creator")
+                    
                     //prints out entries of given creator
                     //quit = true;
                     break;
                 case "6":
+                    Console.WriteLine("Sorting out by ratings in decending order")
+                    
                     //sorts by rating in descending order
                     //quit = true;
                     break;
                 case "7":
+                    Console.WriteLine("Sorting out by acending order by the year")
+                    
                     //sorts in ascending order by year
                     //quit = true;
                     break;
                 case "8":
+                    Console.WriteLine("Sorting out by alphabetical order")
+                    
                     //Sorts entries lexicographically 
                     //quit = true;
                     break;
                 case "9":
+                    Console.WriteLine("Printing enteries released by the year " + year)
+                    
                     //prints out all entries released on or after a given year
                     //quit = true;
                     break;
