@@ -83,6 +83,13 @@ public class Menu
                     //prints out all entries released on or after a given year
                     //quit = true;
                     break;
+                case "11":
+                    //Allows the user to remove an entry by title
+                    Console.WriteLine("Enter the title of the entry you wish to remove: ");
+                    string title = Console.ReadLine();
+                    FileReader.Remove("CNoteSharpDatabase.csv", title);
+                    Console.WriteLine($"{title} has been removed from the database.");
+                    break;
                 case "0":
                     Console.WriteLine("Thank you for tuning into CNoteSharp. Have a nice day!");
                     quit = true;
