@@ -25,7 +25,7 @@ public class FileReader
         return lineCount;
     }
 
-    public static List<object> ReadCNoteSharpDataBase(string path)
+    public static List<object> Read(string path)
     {
         if (!File.Exists(path))
         {
@@ -93,8 +93,49 @@ public class FileReader
         return database;
     }
 
-    private static void WriteCNoteSharpDataBase()
+    private static void Write()
     {
         using StreamWriter streamWriter = new StreamWriter("CNoteSharpDatabase.csv");
+    }
+
+    public static void Remove(string path, string entry)
+	{
+    	if (!File.Exists(path))
+    	{
+   		     throw new FileNotFoundException($"The file wasn't found!");
+	    }
+	    if (entry == null)
+  	    {
+        	throw new ArgumentNullException($"The entry to be removed cannot be null!");
+    	}
+
+        int lineCount = GetLineCount(path);
+        using StreamReader reader = new StreamReader(path);
+    
+        string tempFile = "temp.csv";
+        using StreamWriter writer = new StreamWriter(tempFile);
+    
+        for (int i = 0; i < lineCount - 1; i++)
+        {
+            string line = reader.ReadLine();
+    
+            string[] cols = line.Split(',');
+
+            string title = cols[1];
+    
+            if (title == entry)
+            {
+                //skips entry
+            }
+            else
+            {
+                writer.WriteLine(line);
+            }
+        }
+        writer.Close();
+        reader.Close();
+    
+        File.Delete(path);
+        File.Move(tempFile, path);
     }
 }
