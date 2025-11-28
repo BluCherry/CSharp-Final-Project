@@ -84,8 +84,9 @@ public class Menu
                 case "11":
                     //Allows the user to remove an entry by title
                     Console.WriteLine("Enter the title of the entry you wish to remove: ");
-                    string title = Console.ReadLine();
+                    string title = Console.ReadLine().ToLower;
                     FileReader.Remove("CNoteSharpDatabase.csv", title);
+                    title = textinfo.ToTitleCase(title);
                     Console.WriteLine($"{title} has been removed from the database.");
                     break;
                 case "0":
