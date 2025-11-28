@@ -15,6 +15,11 @@ namespace Intermediate_CSharp_Final
             Album = album;
         }
 
+        public override string ToString()
+        {
+            return $"{Title} from the album {Album}, created by {Creator} in {Year}, Duration: {Duration} mins, Rating: {Rating}/5";
+        }
+
         public string Album
         {
             get => album;
@@ -29,5 +34,6 @@ namespace Intermediate_CSharp_Final
         }
     }
 }
+
 
 
