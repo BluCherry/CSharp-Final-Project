@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,11 @@ namespace Intermediate_CSharp_Final
             ShowTitle = showTitle;
             SeasonNumber = seasonNumber;
             EpisodeNumber = episodeNumber;
+        }
+
+        public override string ToString()
+        {
+            return $"{Title} - S{SeasonNumber:D2} E{EpisodeNumber:D2} of {ShowTitle}, created by {Creator} in {Year}, Duration: {Duration} mins, Rating: {Rating}/10";
         }
 
         public string ShowTitle
@@ -59,5 +64,6 @@ namespace Intermediate_CSharp_Final
         }
     }
 }
+
 
 
