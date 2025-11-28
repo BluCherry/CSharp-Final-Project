@@ -4,7 +4,7 @@
 
 namespace Intermediate_CSharp_Final;
 
-public class FileReader
+public class LINQ
 {
 
     private static int GetLineCount(string path)
@@ -25,7 +25,7 @@ public class FileReader
         return lineCount;
     }
 
-    public static List<object> Read(string path)
+    public static IEnumerable<object> Read(string path)
     {
         if (!File.Exists(path))
         {
@@ -95,7 +95,7 @@ public class FileReader
 
 	public static void Print<T>()
 	{
-	    List<object> database = Read("CNoteSharpDatabase.csv");
+	    List<object> database = (List<object>)Read("CNoteSharpDatabase.csv");
 	    database.FindAll(item => item is T).ForEach(Console.WriteLine);
 	}	
 
