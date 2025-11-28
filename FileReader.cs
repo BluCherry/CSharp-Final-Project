@@ -134,7 +134,7 @@ public class FileReader
     
             string[] cols = line.Split(',');
 
-            string title = cols[1];
+            string title = cols[1].ToLower();
     
             if (title == entry)
             {
