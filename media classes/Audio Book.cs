@@ -12,6 +12,13 @@ namespace Intermediate_CSharp_Final
         {
             
         }
+
+        public override string ToString()
+        {
+            string ratingString = Rating ? "Thumbs Up" : "Thumbs Down";
+            return $"{Title}, created by {Creator} in {Year}, Duration: {Duration} mins, Rating: {ratingString}";
+        }
     }
 }
+
 
