@@ -32,28 +32,24 @@ public class Menu
             switch (command)
             {
                 case "1":
-                    Console.WriteLine("Printing out all entries")
-                    
-                    //prints all entries
-                    //quit = true;
+                    //prints out all entries
+                    Console.WriteLine("Printing all entries in the database...");
+                    FileReader.Print<object>();
                     break;
                 case "2":
-                    Console.WriteLine("Printing out all music tracks")
-                    
-                    //prints out music tracks
-                    //quit = true;
+                    //prints out all music tracks
+                    Console.WriteLine("Printing all music tracks in the database...");
+                    FileReader.Print<Track>();
                     break;
                 case "3":
-                    Console.WriteLine("Printing out all audiobooks")
-                    
                     //prints out all audiobooks
-                    //quit = true;
+                    Console.WriteLine("Printing all audiobooks in the database...");
+                    FileReader.Print<Audio_Book>(); 
                     break;
                 case "4":
-                    Console.WriteLine("Printing out all TV episodes")
-                    
                     //prints out all TV episodes
-                    //quit = true;
+                    Console.WriteLine("Printing all TV Episodes in the database...");
+                    FileReader.Print<TV_Episode>();
                     break;
                 case "5":
                     Console.WriteLine("Printing out all entries with a given creator")
