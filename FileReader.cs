@@ -93,6 +93,19 @@ public class FileReader
         return database;
     }
 
+	public static void Print<T>()
+	{
+	    List<object> database = Read("CNoteSharpDatabase.csv");
+	
+	    for (int i = 0; i < database.Count; i++)
+	    {
+	        if (database[i] is T)
+	        {
+ 	           Console.WriteLine(database[i]);
+ 	       }
+	    }
+	}	
+
     private static void Write()
     {
         using StreamWriter streamWriter = new StreamWriter("CNoteSharpDatabase.csv");
