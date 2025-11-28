@@ -34,22 +34,22 @@ public class Menu
                 case "1":
                     //prints out all entries
                     Console.WriteLine("Printing all entries in the database...");
-                    FileReader.Print<object>();
+                    LINQ.Print<object>();
                     break;
                 case "2":
                     //prints out all music tracks
                     Console.WriteLine("Printing all music tracks in the database...");
-                    FileReader.Print<Track>();
+                    LINQ.Print<Track>();
                     break;
                 case "3":
                     //prints out all audiobooks
                     Console.WriteLine("Printing all audiobooks in the database...");
-                    FileReader.Print<Audio_Book>(); 
+                    LINQ.Print<Audio_Book>(); 
                     break;
                 case "4":
                     //prints out all TV episodes
                     Console.WriteLine("Printing all TV Episodes in the database...");
-                    FileReader.Print<TV_Episode>();
+                    LINQ.Print<TV_Episode>();
                     break;
                 case "5":
                     Console.WriteLine("Printing out all entries with a given creator")
@@ -85,7 +85,7 @@ public class Menu
                     //Allows the user to remove an entry by title
                     Console.WriteLine("Enter the title of the entry you wish to remove: ");
                     string title = Console.ReadLine().ToLower;
-                    FileReader.Remove("CNoteSharpDatabase.csv", title);
+                    LINQ.Remove("CNoteSharpDatabase.csv", title);
                     title = textinfo.ToTitleCase(title);
                     Console.WriteLine($"{title} has been removed from the database.");
                     break;
