@@ -18,7 +18,13 @@ namespace Intermediate_CSharp_Final
             string ratingString = Rating ? "Thumbs Up" : "Thumbs Down";
             return $"{Title}, created by {Creator} in {Year}, Duration: {Duration} mins, Rating: {ratingString}";
         }
+
+        public string ToCsv()
+        {
+            return $"AudioBook,{Title},,{Creator},,{Year},,,{Duration},{Rating}";
+        }
     }
 }
+
 
 
