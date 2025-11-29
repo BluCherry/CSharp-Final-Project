@@ -20,7 +20,7 @@ public class Menu
                           "\t7. Sort all entries in ascending order based on their year\n" +
                           "\t8. Sort all entries by the lexicographical order of their title\n" +
                           "\t9. Print out all entries released on or after a given year\n" +
-                          "\t10. Adds an entry\n" +
+                          "\t10. Add an entry to the database\n" +
                           "\t11. Removes an entry by the title\n" +
                           "\t12. Print out a shuffled list of all music tracks\n" +
                           "\t0. Quit");
