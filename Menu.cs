@@ -75,7 +75,29 @@ public class Menu
                     break;
                 case "10":
                     //Allows the user to add an entry to the database
-                    //quit = true;
+                    Console.WriteLine($"What type of entry do you want to add?\n" +
+                                      $"1. Track\n" +
+                                      $"2. Audiobook\n" +
+                                      $"3. TV Episodes");
+
+                    Console.WriteLine($"\nEnter your choice (1-3): ");
+                    string choice = Console.ReadLine();
+
+                    switch (choice)
+                    {
+                        case "1":
+                            LINQ.Add(choice, path);
+                            break;
+                        case "2":
+                            LINQ.Add(choice, path);
+                            break;
+                        case "3":
+                            LINQ.Add(choice, path);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice!");
+                            return;
+                    }
                     break;
                 case "11":
                     //Allows the user to remove an entry by title
