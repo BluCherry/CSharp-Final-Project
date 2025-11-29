@@ -1,4 +1,7 @@
-﻿using System.Net.Sockets;
+//A test I made to allow user to write an entry to the file. 
+//I'm unsure if it actually writes, but this is the template we can ubild more on.
+
+using System.Net.Sockets;
 using Intermediate_CSharp_Final;
 
 public class Write
