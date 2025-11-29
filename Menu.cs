@@ -21,7 +21,7 @@ public class Menu
                           "\t8. Sort all entries by the lexicographical order of their title\n" +
                           "\t9. Print out all entries released on or after a given year\n" +
                           "\t10. Adds an entry\n" +
-                          "\t11. Removes an entry by the title\n" +
+                          "\t10. Removes an entry by the title\n" +
                           "\t0. Quit");
 
         while (quit == false)
