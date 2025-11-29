@@ -21,7 +21,8 @@ public class Menu
                           "\t8. Sort all entries by the lexicographical order of their title\n" +
                           "\t9. Print out all entries released on or after a given year\n" +
                           "\t10. Adds an entry\n" +
-                          "\t10. Removes an entry by the title\n" +
+                          "\t11. Removes an entry by the title\n" +
+                          "\t12. Print out a shuffled list of all music tracks\n" +
                           "\t0. Quit");
 
         while (quit == false)
@@ -82,12 +83,21 @@ public class Menu
                     //quit = true;
                     break;
                 case "10":
+                    //Allows the user to add an entry to the database
+                    //quit = true;
+                    break;
+                case "11":
                     //Allows the user to remove an entry by title
                     Console.WriteLine("Enter the title of the entry you wish to remove: ");
-                    string title = Console.ReadLine().ToLower;
+                    string title = Console.ReadLine().ToLower();
                     LINQ.Remove("CNoteSharpDatabase.csv", title);
                     title = textinfo.ToTitleCase(title);
                     Console.WriteLine($"{title} has been removed from the database.");
+                    break;
+                case "12":
+                    //Shuffles the entries in the database
+                    Console.WriteLine("Shuffling the entries in the database...");
+                    LINQ.Shuffle<Track>("CNoteSharpDatabase.csv");
                     break;
                 case "0":
                     Console.WriteLine("Thank you for tuning into CNoteSharp. Have a nice day!");
