@@ -1,7 +1,3 @@
-//Basic FileReader, outputs something close to the correct format but could obviously look better.
-//The parts are not parsed into the correct type, whoevers making the classes will decide which type each variable is, and we'll add it 
-//when that has been finalized. The filewriter has nothing in it yet, we can worry about that later too.
-
 namespace Intermediate_CSharp_Final;
 
 public class LINQ
@@ -143,5 +139,14 @@ public class LINQ
     
         File.Delete(path);
         File.Move(tempFile, path);
+    }
+
+	public static void Shuffle<T>(string path)
+	{
+      	List<object> database = (List<object>)LINQ.Read("CNoteSharpDatabase.csv");
+        var shuffledList = database.FindAll(item => item is T).OrderBy(item => Guid.NewGuid()).ToList(); /*Guid.NewGuid() assigns a unique identifier for each element [Globally Unique Identifier] 
+                                                                                                         *OrderBy then sorts the elements based on these unique identifiers, effectively randomizing their order
+                                                                                                         *ToList() converts the shuffled IEnumerable back into a List*/
+        shuffledList.ForEach(Console.WriteLine);
     }
 }
