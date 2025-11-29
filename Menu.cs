@@ -10,7 +10,7 @@ public class Menu
         Console.WriteLine();
         Console.WriteLine("Welcome to CNoteSharp, your one stop station for finding new music, " +
                           "audio books and popular TV episodes!\nTo start your search, enter a number " +
-                          "that corresponds to your desired command. (Numbers 0-10)");
+                          "that corresponds to your desired command. (Numbers 0-12)");
         Console.WriteLine("\t1. Print out all entries in the database\n" +
                           "\t2. Print out all music tracks\n" +
                           "\t3. Print out all audio books\n" +
@@ -27,7 +27,7 @@ public class Menu
 
         while (quit == false)
         {
-            Console.Write("\nEnter your number here (0-10): ");
+            Console.Write("\nEnter your number here (0-12): ");
             command = Console.ReadLine();
 
             switch (command)
