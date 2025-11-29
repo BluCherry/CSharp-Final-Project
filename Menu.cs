@@ -35,50 +35,41 @@ public class Menu
                 case "1":
                     //prints out all entries
                     Console.WriteLine("Printing all entries in the database...");
-                    LINQ.Print<object>();
+                    List<object> database = (List<object>)LINQ.ReadXML("CNoteSharpDatabase.XML");
+                    database.ForEach(Console.WriteLine);
                     break;
                 case "2":
                     //prints out all music tracks
                     Console.WriteLine("Printing all music tracks in the database...");
-                    LINQ.Print<Track>();
+                    LINQ.Print<Track>("CNoteSharpDatabase.XML");
                     break;
                 case "3":
                     //prints out all audiobooks
                     Console.WriteLine("Printing all audiobooks in the database...");
-                    LINQ.Print<Audio_Book>(); 
+                    LINQ.Print<Audio_Book>("CNoteSharpDatabase.XML"); 
                     break;
                 case "4":
                     //prints out all TV episodes
                     Console.WriteLine("Printing all TV Episodes in the database...");
-                    LINQ.Print<TV_Episode>();
+                    LINQ.Print<TV_Episode>("CNoteSharpDatabase.XML");
                     break;
                 case "5":
-                    Console.WriteLine("Printing out all entries with a given creator")
-                    
                     //prints out entries of given creator
                     //quit = true;
                     break;
                 case "6":
-                    Console.WriteLine("Sorting out by ratings in decending order")
-                    
                     //sorts by rating in descending order
                     //quit = true;
                     break;
                 case "7":
-                    Console.WriteLine("Sorting out by acending order by the year")
-                    
                     //sorts in ascending order by year
                     //quit = true;
                     break;
                 case "8":
-                    Console.WriteLine("Sorting out by alphabetical order")
-                    
                     //Sorts entries lexicographically 
                     //quit = true;
                     break;
                 case "9":
-                    Console.WriteLine("Printing enteries released by the year " + year)
-                    
                     //prints out all entries released on or after a given year
                     //quit = true;
                     break;
@@ -89,15 +80,13 @@ public class Menu
                 case "11":
                     //Allows the user to remove an entry by title
                     Console.WriteLine("Enter the title of the entry you wish to remove: ");
-                    string title = Console.ReadLine().ToLower();
-                    LINQ.Remove("CNoteSharpDatabase.csv", title);
-                    title = textinfo.ToTitleCase(title);
-                    Console.WriteLine($"{title} has been removed from the database.");
+                    string title = Console.ReadLine();
+                    LINQ.Remove("CNoteSharpDatabase.XML", title);
                     break;
                 case "12":
                     //Shuffles the entries in the database
                     Console.WriteLine("Shuffling the entries in the database...");
-                    LINQ.Shuffle<Track>("CNoteSharpDatabase.csv");
+                    LINQ.Shuffle<Track>("CNoteSharpDatabase.XML");
                     break;
                 case "0":
                     Console.WriteLine("Thank you for tuning into CNoteSharp. Have a nice day!");
