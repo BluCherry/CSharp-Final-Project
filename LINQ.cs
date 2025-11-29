@@ -92,7 +92,7 @@ public class LINQ
 	    database.FindAll(item => item is T).ForEach(Console.WriteLine);
 	}	
 
-    public static void Add<T>(T choice, string path)
+    public static void Add<T>(string path)
     {
         if (!File.Exists(path))
         {
@@ -107,30 +107,39 @@ public class LINQ
         Console.WriteLine("Creator: ");
         string creator = textinfo.ToTitleCase(Console.ReadLine());
 
-        Console.WriteLine("Year: ");
         int year = 0;
 
         bool validInput = false;
         while (!validInput)
         {
+            Console.WriteLine("Year: ");
+
             string yearInput = Console.ReadLine();
             if (int.TryParse(yearInput, out int yearValue))
             {
-                validInput = true;
-                year = yearValue;
+                if (yearValue < 1000 || yearValue > DateTime.Now.Year)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid year:");
+                }
+                else
+                {
+                    validInput = true;
+                    year = yearValue;
+                }
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid year:");
+                Console.WriteLine("Invalid input. Please enter a valid year.");
             }
         }
 
-        Console.WriteLine("Duration (Minutes): ");
         double duration = 0.0;
 
         validInput = false;
         while (!validInput)
         {
+            Console.WriteLine("Duration (Minutes): ");
+
             string durationInput = Console.ReadLine();
             if (double.TryParse(durationInput, out double durationValue))
             {
@@ -139,133 +148,160 @@ public class LINQ
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid duration in minutes:");
+                Console.WriteLine("Invalid input. Please enter a valid duration.");
             }
         }
 
-        switch (choice)
+        if (typeof(T) == typeof(Track))
         {
-            case Track t:
-                Console.WriteLine("Album: ");
-                string album = textinfo.ToTitleCase(Console.ReadLine());
+            Console.WriteLine("Album: ");
+            string album = textinfo.ToTitleCase(Console.ReadLine());
 
-                Console.WriteLine("Rating: ");
-                double ratingT = 0.0;
+            double ratingT = 0.0;
 
-                validInput = false;
-                while (!validInput)
+            validInput = false;
+            while (!validInput)
+            {
+                Console.WriteLine("Rating (Decimal 1-5): ");
+
+                string ratingInput = Console.ReadLine();
+                if (double.TryParse(ratingInput, out double ratingValue))
                 {
-                    string ratingInput = Console.ReadLine();
-                    if (double.TryParse(ratingInput, out double ratingValue))
-                    {
-                        validInput = true;
-                        ratingT = ratingValue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid rating (numeric value):");
-                    }
+                    validInput = true;
+                    ratingT = ratingValue;
                 }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid rating.");
+                }
+            }
 
-                t = new Track(title, creator, album, year, duration, ratingT);
+            XElement newTrack = new XElement("Entry",
+                new XAttribute("Type", "Track"),
+                new XElement("Title", title),
+                new XElement("Creator", creator),
+                new XElement("Album", album),
+                new XElement("Year", year),
+                new XElement("Duration", duration),
+                new XElement("Rating", ratingT)
+            );
 
-                doc.Root?.Add(t);
-                doc.Save(path);
-                break;
+            doc.Root?.Add(newTrack);
+            doc.Save(path);
+        }
 
-            case Audio_Book b:
+        if (typeof(T) == typeof(Audio_Book))
+        {
+            bool ratingA = false;
+
+            validInput = false;
+            while (!validInput)
+            {
                 Console.WriteLine("Rating (Thumbs Up/Thumbs Down): ) ");
-                bool ratingA = false;
 
-                validInput = false;
-                while (!validInput)
+                if (string.Equals(Console.ReadLine(), "thumbs up", StringComparison.InvariantCultureIgnoreCase) || string.Equals(Console.ReadLine(), "up", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (string.Equals(Console.ReadLine(), "thumbs up", StringComparison.InvariantCultureIgnoreCase) || string.Equals(Console.ReadLine(), "up", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        ratingA = true;
-                    }
-                    else if (string.Equals(Console.ReadLine(), "thumbs down", StringComparison.InvariantCultureIgnoreCase) || string.Equals(Console.ReadLine(), "down", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        ratingA = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter 'Thumbs Up' or 'Thumbs Down':");
-                    }
+                    ratingA = true;
                 }
+                else if (string.Equals(Console.ReadLine(), "thumbs down", StringComparison.InvariantCultureIgnoreCase) || string.Equals(Console.ReadLine(), "down", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ratingA = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter 'Thumbs Up' or 'Thumbs Down'.");
+                }
+            }
 
-                b = new Audio_Book(title, creator, year, duration, ratingA);
+            XElement newAudiobook = new XElement("Entry",
+                new XAttribute("Type", "Audiobook"),
+                new XElement("Title", title),
+                new XElement("Creator", creator),
+                new XElement("Year", year),
+                new XElement("Duration", duration),
+                new XElement("Rating", ratingA)
+            );
 
-                doc.Root?.Add(b);
-                doc.Save(path); 
-                break;
+            doc.Root?.Add(newAudiobook);
+            doc.Save(path);
+        }
 
-            case TV_Episode e:
-                Console.WriteLine("Show Title:");
-                string showTitle = textinfo.ToTitleCase(Console.ReadLine());
+        if (typeof(T) == typeof(TV_Episode))
+        {
+            Console.WriteLine("Show Title:");
+            string showTitle = textinfo.ToTitleCase(Console.ReadLine());
 
+            int season = 0;
+
+            validInput = false;
+            while (!validInput)
+            {
                 Console.WriteLine("Season Number: ");
-                int season = 0;
 
-                validInput = false;
-                while (!validInput)
+                string seasonInput = Console.ReadLine();
+                if (int.TryParse(seasonInput, out int seasonValue))
                 {
-                    string seasonInput = Console.ReadLine();
-                    if (int.TryParse(seasonInput, out int seasonValue))
-                    {
-                        validInput = true;
-                        season = seasonValue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid season number:");
-                    }
+                    validInput = true;
+                    season = seasonValue;
                 }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid season number.");
+                }
+            }
 
+            int episode = 0;
+
+            validInput = false;
+            while (!validInput)
+            {
                 Console.WriteLine("Episode Number: ");
-                int episode = 0;
 
-                validInput = false;
-                while (!validInput)
+                string episodeInput = Console.ReadLine();
+                if (int.TryParse(episodeInput, out int episodeValue))
                 {
-                    string episodeInput = Console.ReadLine();
-                    if (int.TryParse(episodeInput, out int episodeValue))
-                    {
-                        validInput = true;
-                        episode = episodeValue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid episode number:");
-                    }
+                    validInput = true;
+                    episode = episodeValue;
                 }
-
-                Console.WriteLine("Rating: ");
-                int rating = 0;
-
-                validInput = false;
-                while (!validInput)
+                else
                 {
-                    string ratingInput = Console.ReadLine();
-                    if (int.TryParse(ratingInput, out int ratingValue))
-                    {
-                        validInput = true;
-                        rating = ratingValue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid rating (numeric value):");
-                    }
+                    Console.WriteLine("Invalid input. Please enter a valid episode number.");
                 }
+            }
 
-                e = new TV_Episode(title, showTitle, creator, year, season, episode, duration, rating);
+            int rating = 0;
 
-                doc.Root?.Add(e);
-                doc.Save(path); 
-                break;
+            validInput = false;
+            while (!validInput)
+            {
+                Console.WriteLine("Rating (Integer 1-10): ");
 
-            default:
-                throw new Exception($"Unknown item type!");
+                string ratingInput = Console.ReadLine();
+                if (int.TryParse(ratingInput, out int ratingValue))
+                {
+                    validInput = true;
+                    rating = ratingValue;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid rating.");
+                }
+            }
+
+            XElement newTV_Episode = new XElement("Entry",
+                new XAttribute("Type", "TV_Episode"),
+                new XElement("Title", title),
+                new XElement("Creator", creator),
+                new XElement("ShowTitle", showTitle),
+                new XElement("Year", year),
+                new XElement("SeasonNumber", season),
+                new XElement("EpisodeNumber", episode),
+                new XElement("Duration", duration),
+                new XElement("Rating", rating)
+            );
+
+            doc.Root?.Add(newTV_Episode);
+            doc.Save(path);
         }
     }
 
