@@ -80,19 +80,34 @@ public class Menu
                                       $"2. Audiobook\n" +
                                       $"3. TV Episodes");
 
-                    Console.WriteLine($"\nEnter your choice (1-3): ");
-                    string choice = Console.ReadLine();
+                    string choice = "";
+
+                    bool validChoice = false;
+                    while (!validChoice)
+                    {
+                        Console.WriteLine($"\nEnter your choice (1-3): ");
+
+                        if (int.TryParse(Console.ReadLine(), out int choiceNum) && choiceNum >= 1 && choiceNum <= 3)
+                        {
+                            validChoice = true;
+                            choice = choiceNum.ToString();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please enter a number between 1 and 3.");
+                        }
+                    }
 
                     switch (choice)
                     {
                         case "1":
-                            LINQ.Add(choice, path);
+                            LINQ.Add<Track>(path);
                             break;
                         case "2":
-                            LINQ.Add(choice, path);
+                            LINQ.Add<Audio_Book>(path);
                             break;
                         case "3":
-                            LINQ.Add(choice, path);
+                            LINQ.Add<TV_Episode>(path);
                             break;
                         default:
                             Console.WriteLine("Invalid choice!");
