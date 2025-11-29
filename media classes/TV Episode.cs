@@ -62,14 +62,9 @@ namespace Intermediate_CSharp_Final
                 episodeNumber = value;
             }
         }
-
-        public string ToCsv()
-        {
-            return
-                $"TV Episodes,{Title},{ShowTitle},{Creator},,{Year},{SeasonNumber},{EpisodeNumber},{Duration},{Rating}";
-        }
     }
 }
+
 
 
 
