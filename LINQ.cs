@@ -92,9 +92,27 @@ public class LINQ
 	    database.FindAll(item => item is T).ForEach(Console.WriteLine);
 	}	
 
-    private static void Write()
+    public static void Write(List<object> database, string path)
     {
-        using StreamWriter streamWriter = new StreamWriter("CNoteSharpDatabase.csv");
+        using StreamWriter streamWriter = new StreamWriter(path, true);
+
+        foreach (object item in database)
+        {
+            switch (item)
+            {
+                case Track t:
+                    streamWriter.WriteLine(t.ToCsv);
+                    break;
+                case Audio_Book b:
+                    streamWriter.WriteLine(b.ToCsv());
+                    break;
+                case TV_Episode e:
+                    streamWriter.WriteLine(e.ToCsv());
+                    break;
+                    default:
+                        throw new Exception($"Unknown item type!");
+            }
+        }
     }
 
     public static void Remove(string path, string entry)
