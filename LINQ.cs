@@ -21,77 +21,74 @@ public class LINQ
         return lineCount;
     }
 
-    public static IEnumerable<object> Read(string path)
+    public static IEnumerable<object> ReadXML(string path)
     {
         if (!File.Exists(path))
         {
             throw new FileNotFoundException($"The file wasn't found!");
         }
-        
-        int lineCount = GetLineCount(path);
-        List<object> database = new List<object>(lineCount - 1);
-        
-        using StreamReader reader = new StreamReader(path); 
-        reader.ReadLine();
 
-        for (int i = 0; i < lineCount - 1; i++)
+        XDocument xmlDoc = XDocument.Load(path);
+
+        List<object> database = new List<object>();
+
+        foreach (XElement elem in xmlDoc.Descendants("Entry"))
         {
-            string line = reader.ReadLine();
+            string type = (string)elem.Attribute("Type");
 
-            string[] cols = line.Split(',');
-
-            string type = cols[0];
-
-            if (type == "Track")
+            switch (type)
             {
-                string title = cols[1];
-                string creator = cols[3];
-                string album = cols[4];
-                int year = int.Parse(cols[5]);
-                double duration = double.Parse(cols[8]);
-                double rating = double.Parse(cols[9]);
+                case "Track":
+                    string title1 = (string)elem.Element("Title");
+                    string creator1 = (string)elem.Element("Creator");
+                    string album1 = (string)elem.Element("Album");
+                    int year1 = (int?)elem.Element("Year") ?? 0;
+                    double duration1 = (double?)elem.Element("Duration") ?? 0.0;
+                    double rating1 = (double?)elem.Element("Rating") ?? 0.0;
 
-                database.Add(new Track(title, creator, album, year, duration, rating));
-            }
-            if (type == "Audiobook")
-            {
-                string title = cols[1];
-                string creator = cols[3];
-                int year = int.Parse(cols[5]);
-                double duration = double.Parse(cols[8]);
-                if (cols[9] == "Thumbs Up")                 
-                {
-                    cols[9] = "True";
-                }
-                else
-                {
-                    cols[9] = "False";
-                }
-                bool rating = bool.Parse(cols[9]);
-        
-                database.Add(new Audio_Book(title, creator, year, duration, rating));
-            }
-            if (type == "TV Episodes")
-            {
-                string title = cols[1];
-                string showTitle = cols[2];
-                string creator = cols[3];
-                int year = int.Parse(cols[5]);
-                int seasonNumber = int.Parse(cols[6]);
-                int episodeNumber = int.Parse(cols[7]);
-                double duration = double.Parse(cols[8]);
-                int rating = int.Parse(cols[9]);
-        
-                database.Add(new TV_Episode(title, showTitle, creator, year, seasonNumber, episodeNumber, duration, rating));
+                    database.Add(new Track(title1, creator1, album1, year1, duration1, rating1));
+
+                    break;
+                case "Audiobook":
+                    string title2 = (string)elem.Element("Title");
+                    string creator2 = (string)elem.Element("Creator");
+                    int year2 = (int?)elem.Element("Year") ?? 0;
+                    double duration2 = (double?)elem.Element("Duration") ?? 0.0;
+                    bool rating2;
+                    if ((string)elem.Element("Rating") == "Thumbs Up")
+                    {
+                        rating2 = true;
+                    }
+                    else
+                    {
+                        rating2 = false;
+                    }
+
+                    database.Add(new Audio_Book(title2, creator2, year2, duration2, rating2));
+
+                    break;
+                case "TV_Episode":
+                    string title = (string)elem.Element("Title");
+                    string showTitle = (string)elem.Element("ShowTitle");
+                    string creator = (string)elem.Element("Creator");
+                    int year = (int?)elem.Element("Year") ?? 0;
+                    int seasonNumber = (int?)elem.Element("SeasonNumber") ?? 0;
+                    int episodeNumber = (int?)elem.Element("EpisodeNumber") ?? 0;
+                    double duration = (double?)elem.Element("Duration") ?? 0.0;
+                    int rating = (int?)elem.Element("Rating") ?? 0;
+
+                    database.Add(new TV_Episode(title, showTitle, creator, year, seasonNumber, episodeNumber, duration, rating));
+
+                    break;
             }
         }
-        
+
         return database;
     }
 
 	public static void Print<T>()
 	{
-	    List<object> database = (List<object>)Read("CNoteSharpDatabase.csv");
+	    List<object> database = (List<object>)ReadXML("CNoteSharpDatabase.csv");
 	    database.FindAll(item => item is T).ForEach(Console.WriteLine);
 	}	
 
@@ -111,39 +108,38 @@ public class LINQ
         	throw new ArgumentNullException($"The entry to be removed cannot be null!");
     	}
 
-        int lineCount = GetLineCount(path);
-        using StreamReader reader = new StreamReader(path);
-    
-        string tempFile = "temp.csv";
-        using StreamWriter writer = new StreamWriter(tempFile);
-    
-        for (int i = 0; i < lineCount - 1; i++)
-        {
-            string line = reader.ReadLine();
-    
-            string[] cols = line.Split(',');
+        
+        var textinfo = new CultureInfo("en-US", false).TextInfo;
 
-            string title = cols[1].ToLower();
-    
-            if (title == entry)
+        try
+        {
+            XDocument doc = XDocument.Load(path);
+
+            XElement elementToRemove = doc.Descendants("Entry")
+                .FirstOrDefault(e => string.Equals((string?)e.Element("Title"),
+                                                  entry,
+                                                  StringComparison.OrdinalIgnoreCase));
+
+            if (elementToRemove != null)
             {
-                //skips entry
+                elementToRemove.Remove();
+                doc.Save(path);
+                Console.WriteLine($"{textinfo.ToTitleCase(entry)} has been removed from the database.");
             }
             else
             {
-                writer.WriteLine(line);
+                Console.WriteLine("No matching element found.");
             }
         }
-        writer.Close();
-        reader.Close();
-    
-        File.Delete(path);
-        File.Move(tempFile, path);
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
     }
 
 	public static void Shuffle<T>(string path)
 	{
-      	List<object> database = (List<object>)LINQ.Read("CNoteSharpDatabase.csv");
+      	List<object> database = (List<object>)LINQ.ReadXML("CNoteSharpDatabase.csv");
         var shuffledList = database.FindAll(item => item is T).OrderBy(item => Guid.NewGuid()).ToList(); /*Guid.NewGuid() assigns a unique identifier for each element [Globally Unique Identifier] 
                                                                                                          *OrderBy then sorts the elements based on these unique identifiers, effectively randomizing their order
                                                                                                          *ToList() converts the shuffled IEnumerable back into a List*/
