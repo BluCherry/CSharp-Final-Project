@@ -32,8 +32,14 @@ namespace Intermediate_CSharp_Final
                 album = value; 
             }
         }
+        
+        public string ToCsv()
+        {
+            return $"Track,{Title},,{Creator},{Album},{Year},,,{Duration},{Rating}";
+        }
     }
 }
+
 
 
 
