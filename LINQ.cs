@@ -86,11 +86,114 @@ public class LINQ
         return database;
     }
 
-	public static void Print<T>()
-	{
-	    List<object> database = (List<object>)ReadXML("CNoteSharpDatabase.csv");
-	    database.FindAll(item => item is T).ForEach(Console.WriteLine);
-	}	
+    public static void Print<T>()
+    {
+        List<object> database = (List<object>)ReadXML("CNoteSharpDatabase.csv");
+        database.FindAll(item => item is T).ForEach(Console.WriteLine);
+    }
+
+    public static void PrintByCreator(string path, string creator)
+    {
+        if (string.IsNullOrWhiteSpace(creator))
+        {
+            Console.WriteLine("Creator name cannot be empty.");
+            return;
+        }
+
+        List<object> database = (List<object>)ReadXML(path);
+
+        var matches = database.Where(item =>
+        {
+            var prop = item.GetType().GetProperty("Creator")?.GetValue(item) as string;
+            return !string.IsNullOrEmpty(prop) && string.Equals(prop, creator, StringComparison.OrdinalIgnoreCase);
+        }).ToList();
+
+        if (!matches.Any())
+        {
+            Console.WriteLine($"No entries found for creator: {creator}");
+            return;
+        }
+
+        matches.ForEach(Console.WriteLine);
+    }
+
+    public static void SortByRatingDesc(string path)
+    {
+        List<object> database = (List<object>)ReadXML(path);
+
+        double ToDoubleRating(object o)
+        {
+            var val = o.GetType().GetProperty("Rating")?.GetValue(o);
+            if (val == null) return 0.0;
+            if (val is double d) return d;
+            if (val is int i) return Convert.ToDouble(i);
+            if (val is bool b) return b ? 1.0 : 0.0;
+            try
+            {
+                return Convert.ToDouble(val);
+            }
+            catch
+            {
+                return 0.0;
+            }
+        }
+
+        var sorted = database.OrderByDescending(item => ToDoubleRating(item)).ToList();
+        sorted.ForEach(Console.WriteLine);
+    }
+
+    public static void SortByYearAsc(string path)
+    {
+        List<object> database = (List<object>)ReadXML(path);
+
+        var sorted = database.OrderBy(item =>
+        {
+            var val = item.GetType().GetProperty("Year")?.GetValue(item);
+            if (val == null) return int.MaxValue;
+            return Convert.ToInt32(val);
+        }).ToList();
+
+        sorted.ForEach(Console.WriteLine);
+    }
+
+    public static void SortByTitleLex(string path)
+    {
+        List<object> database = (List<object>)ReadXML(path);
+
+        var sorted = database.OrderBy(item =>
+        {
+            var val = item.GetType().GetProperty("Title")?.GetValue(item) as string;
+            return val ?? string.Empty;
+        }, StringComparer.InvariantCultureIgnoreCase).ToList();
+
+        sorted.ForEach(Console.WriteLine);
+    }
+
+    public static void PrintByYear(string path, string yearInput)
+    {
+        if (!int.TryParse(yearInput, out int year))
+        {
+            Console.WriteLine("Invalid year provided.");
+            return;
+        }
+
+        List<object> database = (List<object>)ReadXML(path);
+
+        var matches = database.Where(item =>
+        {
+            var val = item.GetType().GetProperty("Year")?.GetValue(item);
+            if (val == null) return false;
+            return Convert.ToInt32(val) >= year;
+        }).ToList();
+
+        if (!matches.Any())
+        {
+            Console.WriteLine($"No entries found on or after year {year}.");
+            return;
+        }
+
+        matches.ForEach(Console.WriteLine);
+    }
 
     public static void Add<T>(string path)
     {
