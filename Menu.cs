@@ -55,21 +55,32 @@ public class Menu
                     break;
                 case "5":
                     //prints out entries of given creator
-                    //quit = true;
+                    Console.WriteLine("Enter the creator's name: ");
+                    string creator = Console.ReadLine();
+                    LINQ.PrintByCreator("CNoteSharpDatabase.XML", creator);
                     break;
+
                 case "6":
+                    Console.WriteLine("Sorting all entries by rating in descending order...");
+                    LINQ.SortByRatingDesc("CNoteSharpDatabase.XML");
                     //sorts by rating in descending order
-                    //quit = true;
                     break;
                 case "7":
                     //sorts in ascending order by year
+                    Console.WriteLine("Sorting all entries by year in ascending order...");
+                    LINQ.SortByYearAsc("CNoteSharpDatabase.XML");
                     //quit = true;
                     break;
                 case "8":
+                    Console.WriteLine("Sorting all entries by title in lexicographical order...");
+                    LINQ.SortByTitleLex("CNoteSharpDatabase.XML");
                     //Sorts entries lexicographically 
                     //quit = true;
                     break;
                 case "9":
+                    Console.WriteLine("Enter the year: ");
+                    string yearInput = Console.ReadLine();
+                    LINQ.PrintByYear("CNoteSharpDatabase.XML", yearInput);
                     //prints out all entries released on or after a given year
                     //quit = true;
                     break;
